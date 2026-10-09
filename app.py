@@ -12,6 +12,8 @@ except ImportError:
             return decorator
         return app
 
+from models import dailysubj
+
 app = Flask(__name__)
 CORS(app)
 
