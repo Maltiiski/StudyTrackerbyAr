@@ -136,3 +136,16 @@ document.getElementById('stop-btn').addEventListener('click', () => {
     stopTimer()
     state = 0
 });
+
+async function sendsubj(subjname) {
+    const response = await fetch("/add-subject", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({subject: subjname})
+    });
+
+    const result = await response.json();
+    console.log("JSON Updated:", result);
+}
