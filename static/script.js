@@ -1,7 +1,8 @@
 const controls = document.querySelector('.control');
-const subjpicked = document.getElementById('pickedsubject')
-let state = 0 /*0=idle,1=running,2=paused */
-let subject = null
+const subjpicked = document.getElementById('pickedsubject');
+let state = 0; /*0=idle,1=running,2=paused */
+let subject = null;
+let lastmnt = 0;
 
 function setTimerState(state) {
     controls.className = `control state-${state}`;
@@ -56,22 +57,34 @@ function formatTime(ms) {
 
     const pad = (num) => String(num).padStart(2, "0");
     return `${pad(hours)} : ${pad(minutes)} : ${pad(seconds)}`;
-}
+};
+
+function newMinute(crrntmnt) {
+    console.log("a new minute has passed bro");
+};
 
 function startTimer() {
     elapsedTime = 0;
+    lastmnt = 0;
     startTime = performance.now();
 
     timerInterval = setInterval(() => {
         elapsedTime = performance.now() - startTime;
         TimerDisplay.textContent = formatTime(elapsedTime);
+
+        const currentmnt = Math.floor(elapsedTime / 60000);
+
+        if (currentmnt > lastmnt) {
+            lastmnt = currentmnt;
+            newMinute(currentmnt);
+        };
     }, 1000);
-}
+};
 
 function pauseTimer() {
     clearInterval(timerInterval);
     timerInterval = null;
-}
+};
 
 function resumeTimer() {
     startTime = performance.now() - elapsedTime;
@@ -79,16 +92,24 @@ function resumeTimer() {
     timerInterval = setInterval(() => {
         elapsedTime = performance.now() - startTime;
         TimerDisplay.textContent = formatTime(elapsedTime);
+
+        const currentmnt = Math.floor(elapsedTime / 60000);
+
+        if (currentmnt > lastmnt) {
+            lastmnt = currentmnt;
+            newMinute(currentmnt);
+        };
     }, 1000);
-}
+};
 
 function stopTimer() {
     clearInterval(timerInterval);
     timerInterval = null;
     elapsedTime = 0;
+    lastmnt = 0;
 
     TimerDisplay.textContent = "00 : 00 : 00";
-}
+};
 
 document.getElementById('start-btn').addEventListener('click', () => {
     if (subject) {
