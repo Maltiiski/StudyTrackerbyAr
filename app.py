@@ -1,5 +1,6 @@
 import json
 import os
+import datetime
 from flask import Flask, jsonify, render_template, request
 
 try:
@@ -17,7 +18,16 @@ CORS(app)
 
 DATA_FILE = "sessions.json"
 
-def addorupd (subj, inc=1):
+def resetperday():
+    if os.path.exists(DATA_FILE):
+        mtime = os.path.getmtime(DATA_FILE)
+        filedate = datetime.datetime.fromtimestamp(mtime).date()
+        today = datetime.date.today()
+
+        if filedate < today:
+            os.remove(DATA_FILE)
+
+def addorupd(subj, inc=1):
     if not os.path.exists(DATA_FILE):
         with open(DATA_FILE, "w") as f:
             json.dump({}, f)

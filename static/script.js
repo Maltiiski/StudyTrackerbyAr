@@ -152,23 +152,21 @@ async function sendsubj(subjname) {
 
 async function getsubj() {
     const response = await fetch("/get-subjects");
-    const result = await response.json();
-    console.log("JSON gotten:", result);
+    return await response.json();
 }
 
 class subjcard {
-    constructor(data) {
-        this.data = data;
-        
-        const hours = Math.floor(data["elap"] / 60);
-        const minutes = Math.floor(data["elap"] % 60);
+    constructor(sub, elp) {
+        const hours = Math.floor(elp / 60);
+        const minutes = Math.floor(elp % 60);
 
-        const formatted = `${hours}${hours === 1 ? "hr" : "hrs"} ${minutes}m`;
+        const formatted = `${hours > 0 ? hours : ""}${hours === 0 ? "" : hours > 1 ? "hrs" : "hr"} ${minutes}m`;
         this.timed = formatted;
+        this.sub = sub
     }
 
     render() {
-        `<h4 class="subjdayc">${this.data} ${this.timed}</h4>`;
+        return `<h4 class="subjdayc">${this.sub} ${this.timed}</h4>`;
     }
 }
 
@@ -179,11 +177,14 @@ async function loadstats() {
     try {
         const subjs = await getsubj();
 
-        subjs.forEach(subj => {
-            const card = subjcard(subj)
-            dailylist.insertAdjacentHTML('beforeend', card.render());
-        });
+        for (const [subject, info] of Object.entries(subjs)) {
+            const kard = new subjcard(subject, info.elap)
+            dailylist.insertAdjacentHTML('beforeend', kard.render())
+        }
     } catch (err) {
         console.error("FAiled to load stats", err);
     }
 }
+
+document.addEventListener('DOMContentLoaded', loadstats);
+
