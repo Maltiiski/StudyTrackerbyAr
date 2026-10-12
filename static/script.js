@@ -163,11 +163,12 @@ class subjcard {
         const hours = Math.floor(data["elap"] / 60);
         const minutes = Math.floor(data["elap"] % 60);
 
-        const formatted = `${hours}${hours === 1 ? "hr" : "hrs"} ${minutes}m`
+        const formatted = `${hours}${hours === 1 ? "hr" : "hrs"} ${minutes}m`;
+        this.timed = formatted;
     }
 
     render() {
-        `<h4 class="subjdayc">${this.data} ${formatted}</h4>`
+        `<h4 class="subjdayc">${this.data} ${this.timed}</h4>`;
     }
 }
 
