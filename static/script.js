@@ -165,4 +165,15 @@ class subjcard {
 async function loadstats() {
     const dailylist = document.getElementById('daily-counted');
     dailylist.innerHTML = '';
+
+    try {
+        const subjs = await getsubj();
+
+        subjs.forEach(subj => {
+            const card = subjcard(subj)
+            dailylist.insertAdjacentHTML('beforeend', card.render());
+        });
+    } catch (err) {
+        console.error("FAiled to load stats", err);
+    }
 }
