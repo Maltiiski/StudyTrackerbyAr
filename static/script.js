@@ -160,6 +160,10 @@ class subjcard {
     constructor(data) {
         this.data = data;
     }
+
+    render() {
+        
+    }
 }
 
 async function loadstats() {
