@@ -156,7 +156,27 @@ async function getsubj() {
     return await response.json();
 }
 
+async function getaccu() {
+    const response = await fetch("/get-accus");
+    return await response.json();
+}
+
 class subjcard {
+    constructor(sub, elp) {
+        const hours = Math.floor(elp / 60);
+        const minutes = Math.floor(elp % 60);
+
+        const formatted = `${hours > 0 ? hours : ""}${hours === 0 ? "" : hours > 1 ? "hrs" : "hr"} ${minutes}m`;
+        this.timed = formatted;
+        this.sub = sub
+    }
+
+    render() {
+        return `<h4 class="subjdayc">${this.sub} ${this.timed}</h4>`;
+    }
+}
+
+class acucard {
     constructor(sub, elp) {
         const hours = Math.floor(elp / 60);
         const minutes = Math.floor(elp % 60);
@@ -184,6 +204,22 @@ async function loadstats() {
         }
     } catch (err) {
         console.error("FAiled to load stats", err);
+    }
+}
+
+async function loadaccu() {
+    const acculist = document.getElementById('accu-counted')
+    acculist.innerHTML = '';
+
+    try {
+        const acu = await getaccu();
+
+        for (const [subject, info] of Object.entries(acu)) {
+            const kard = new acucard(subject, info.elap)
+            acculist.insertAdjacentHTML('beforeend', kard.render())
+        }
+    } catch (err) {
+        console.error("Failed to load accus", err);
     }
 }
 

@@ -50,7 +50,38 @@ def addorupd(subj, inc=1):
 
 ACC_DATAFILE = "accumulated.json"
 
+def asyncaccu(subj, inc=1):
+    if not os.path.exists(ACC_DATAFILE):
+        with open(ACC_DATAFILE, "w") as f:
+            json.dump({}, f)
 
+    with open(ACC_DATAFILE, "r") as f:
+        try:
+            data = json.load(f)
+        except json.JSONDecodeError:
+            data = {}
+
+    if subj in data:
+        data[subj]["elap"] += inc
+    else:
+        data[subj] = {"elap": inc}
+
+    with open(ACC_DATAFILE, "w") as f:
+        json.dump(data, f, indent=4)
+
+@app.route("/get-accus", methods=["GET"])
+def getaccu():
+    if not os.path.exists(ACC_DATAFILE):
+        with open(ACC_DATAFILE, "w") as f:
+            json.dump({}, f)
+
+    with open(ACC_DATAFILE, "r") as f:
+        try:
+            data = json.load(f)
+        except json.JSONDecodeError:
+            data = {}
+
+    return jsonify(data), 200
 
 @app.route("/add-subject", methods=["POST"])
 def handleaddsubj():
@@ -61,6 +92,7 @@ def handleaddsubj():
         return jsonify({"error": "mana nama subj"}), 400
 
     updata = addorupd(subj)
+    asyncaccu()
     return jsonify({"status": "success", "data": updata})
 
 @app.route("/get-subjects", methods=["GET"])
