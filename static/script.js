@@ -60,7 +60,8 @@ function formatTime(ms) {
 };
 
 function newMinute(crrntmnt) {
-    sendsubj(subject)
+    sendsubj(subject);
+    loadstats();
 };
 
 function startTimer() {

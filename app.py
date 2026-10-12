@@ -48,6 +48,10 @@ def addorupd(subj, inc=1):
 
     return data
 
+ACC_DATAFILE = "accumulated.json"
+
+
+
 @app.route("/add-subject", methods=["POST"])
 def handleaddsubj():
     req_data = request.get_json()
