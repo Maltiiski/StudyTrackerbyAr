@@ -27,6 +27,8 @@ def resetperday():
         if filedate < today:
             os.remove(DATA_FILE)
 
+resetperday()
+
 def addorupd(subj, inc=1):
     if not os.path.exists(DATA_FILE):
         with open(DATA_FILE, "w") as f:

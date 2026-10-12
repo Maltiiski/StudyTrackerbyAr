@@ -62,6 +62,7 @@ function formatTime(ms) {
 function newMinute(crrntmnt) {
     sendsubj(subject);
     loadstats();
+    loadaccu();
 };
 
 function startTimer() {
