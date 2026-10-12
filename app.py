@@ -49,6 +49,20 @@ def handleaddsubj():
     updata = addorupd(subj)
     return jsonify({"status": "success", "data": updata})
 
+@app.route("/get-subject", methods=["GET"])
+def getsubj():
+    if not os.path.exists(DATA_FILE):
+        with open(DATA_FILE, "w") as f:
+            json.dump({}, f)
+
+    with open(DATA_FILE, "r") as f:
+        try:
+            data = json.load(f)
+        except json.JSONDecodeError:
+            data = {}
+
+    return jsonify({"status:" "success", "data": data})
+
 @app.route('/')
 def home():
     return render_template('index.html')
