@@ -60,7 +60,7 @@ function formatTime(ms) {
 };
 
 function newMinute(crrntmnt) {
-    console.log("a new minute has passed bro");
+    sendsubj(subject)
 };
 
 function startTimer() {
