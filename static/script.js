@@ -159,10 +159,15 @@ async function getsubj() {
 class subjcard {
     constructor(data) {
         this.data = data;
+        
+        const hours = Math.floor(data["elap"] / 60);
+        const minutes = Math.floor(data["elap"] % 60);
+
+        const formatted = `${hours}${hours === 1 ? "hr" : "hrs"} ${minutes}m`
     }
 
     render() {
-        
+        `<h4 class="subjdayc">${this.data} ${formatted}</h4>`
     }
 }
 
