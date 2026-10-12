@@ -150,3 +150,19 @@ async function sendsubj(subjname) {
     console.log("JSON Updated:", result);
 }
 
+async function getsubj() {
+    const response = await fetch("/get-subjects");
+    const result = await response.json();
+    console.log("JSON gotten:", result);
+}
+
+class subjcard {
+    constructor(data) {
+        this.data = data;
+    }
+}
+
+async function loadstats() {
+    const dailylist = document.getElementById('daily-counted');
+    dailylist.innerHTML = '';
+}

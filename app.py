@@ -49,7 +49,7 @@ def handleaddsubj():
     updata = addorupd(subj)
     return jsonify({"status": "success", "data": updata})
 
-@app.route("/get-subject", methods=["GET"])
+@app.route("/get-subjects", methods=["GET"])
 def getsubj():
     if not os.path.exists(DATA_FILE):
         with open(DATA_FILE, "w") as f:
@@ -61,7 +61,7 @@ def getsubj():
         except json.JSONDecodeError:
             data = {}
 
-    return jsonify({"status:" "success", "data": data})
+    return jsonify(data), 200
 
 @app.route('/')
 def home():
