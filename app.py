@@ -94,7 +94,7 @@ def handleaddsubj():
         return jsonify({"error": "mana nama subj"}), 400
 
     updata = addorupd(subj)
-    asyncaccu()
+    asyncaccu(subj)
     return jsonify({"status": "success", "data": updata})
 
 @app.route("/get-subjects", methods=["GET"])
