@@ -265,16 +265,18 @@ section {
 }
 
 .weekly-subjects {
-    display: inline-block;
+    display: inline-flex;
     background-color: var(--abitblue);
     min-width: 20vw;
     min-height: 65vh;
     border-radius: 15px;
+    flex-direction: column;
+    align-items: center;
     
 }
 
 .subjaccuc {
     font-weight: 400;
     font-size: 1.5rem;
-    margin-top: -1vh;
+    margin-top: 4vh;
 }
