@@ -270,4 +270,11 @@ section {
     min-width: 20vw;
     min-height: 65vh;
     border-radius: 15px;
+    
+}
+
+.subjaccuc {
+    font-weight: 400;
+    font-size: 1.5rem;
+    margin-top: -1vh;
 }

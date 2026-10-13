@@ -188,7 +188,7 @@ class acucard {
     }
 
     render() {
-        return `<h4 class="subjdayc">${this.sub} ${this.timed}</h4>`;
+        return `<h4 class="subjaccuc">${this.sub} ${this.timed}</h4>`;
     }
 }
 
@@ -224,5 +224,8 @@ async function loadaccu() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', loadstats);
+document.addEventListener('DOMContentLoaded', () => {
+    loadstats();
+    loadaccu();
+});
 
